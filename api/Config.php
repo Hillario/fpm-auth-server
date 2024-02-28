@@ -9,7 +9,7 @@
  */
 /*Using define method to elaborate on the constants so as to help in the definition of project scope(Global)*/
 /*Database Name*/
-define('DB_NAME','pdmss'); //codorpsc_e-afya2015
+define('DB_NAME','fpmauth'); //codorpsc_e-afya2015
 
 /*Database User*/
 define('DB_USER','root'); //codorpsc_e-afya
