@@ -24,23 +24,24 @@ include "api/MySql.php";
 
 $db = new MySql();
 
-// Get POST data from Flutter application
-$postData = json_decode(file_get_contents('php://input'), true);
+$json_data = file_get_contents('php://input');
+$json_data_trimmed = trim($json_data);
+$data = json_decode($json_data_trimmed, true); // true parameter to decode as associative array
 
-// Extract username and password
-$username = $postData['username'];
-$password = $postData['password'];
+$username = $data[0]['username'];
+$password = $data[0]['password'];
+
 
 //check if data is empty
 if (!empty($username) && !empty($password)) {
     //Query database for authentication
-    $dbQuery = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+    $dbQuery = "SELECT * FROM users WHERE username = '$username'";
     $dbSelect = $db->select($dbQuery);
 
     if (count($dbSelect) == 0) {
         // Send authentication response in JSON format
         echo json_encode(['success' => false, 'message' => 'Invalid username/password combination']);
-    } elseif ($dbSelect == 1) {
+    } elseif (count($dbSelect) == 1) {
         // Send authentication response in JSON format
         echo json_encode(['success' => true, 'message' => 'Login successful']);
     }
